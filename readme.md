@@ -4,9 +4,9 @@
 
 ### Ollama
 
-Ollama 是一個提供大型語言模型（LLM）服務的工具或平台，旨在使使用者能夠輕鬆地運行和管理語言模型，並將其應用於各種自然語言處理任務。
-在這個範例中我們將會用Ollama來實現VLM的運行，
-首先依照Ollama docker的官方文件來安裝所需的相關Toolkit 
+Ollama is a tool or platform that provides large language model (LLM) services, aiming to enable users to easily run and manage language models and apply them to various natural language processing tasks.
+In this example, we will use Ollama to implement the operation of VLM.
+First, follow the official Ollama docker documentation to install the required related Toolkit
 
 ```
 sudo apt-get install -y nvidia-container-toolkit
@@ -14,12 +14,12 @@ sudo nvidia-ctk runtime configure --runtime=docker
 sudo systemctl restart docker
 ```
 
-安裝並重啟docker後，運行ollama container
+After installing and restarting docker, run the ollama container
 ```
 docker run -d --gpus=all -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
 ```
 
-測試服務是否正常運行 - Get model list (列出目前已下載的模型)
+Test ollama service is available - Get model list (list all downloaded models)
 ```
 curl http://localhost:11434/api/tags
 ```
