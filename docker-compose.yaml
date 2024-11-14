@@ -1,0 +1,40 @@
+version: '3.5'
+
+services:
+  ollama:
+    image: ollama/ollama
+    restart: always
+    volumes:
+      - ${DOCKER_VOLUME_DIRECTORY:-.}/data/ollama_data:/root/.ollama
+    ports:
+      - "11434:11434"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu ]
+  vlm_demo:
+    image: vlm_demo
+    restart: always
+    ports:
+      - "7860:7860"
+    volumes:
+      - /home/user/workspace:/workspace
+      - ${DOCKER_VOLUME_DIRECTORY:-.}/.cache:/root/.cache
+    devices:
+      - /dev/video0:/dev/video0
+      - /dev/video1:/dev/video1
+    build:
+      shm_size: "14g"
+    shm_size: "14g" 
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu ]
+    command: /bin/sh -c "cd /workspace/demo/vlm_demo_2024 && python demo_app.py"
+
